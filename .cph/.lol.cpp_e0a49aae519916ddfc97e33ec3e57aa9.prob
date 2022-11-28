@@ -1,1 +1,0 @@
-{"name":"Local: lol","url":"c:\\Coding Material\\cp\\lol.cpp","tests":[{"id":1668609387306,"input":"2\n5 2\n1 2 4 3 2\n1 1 3 5 5\n2 1 2 3 5\n6 2\n3 5 6 13 12 20\n1 1 4 5 6\n3 2 3 4 6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Coding Material\\cp\\lol.cpp","group":"local","local":true}
