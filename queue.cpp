@@ -88,7 +88,6 @@ int main()
     q.displayQueue();
     q.pop();
     cout << q.peek() << endl;
-    cout << q.isEmpty() << endl;
     q.pop();
     q.pop();
     cout << q.isEmpty() << endl;
