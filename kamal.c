@@ -12,7 +12,7 @@ typedef struct Node Node;
 Node *head = NULL;
 Node *cur = NULL;
 
-void appendNode(int x)
+void makeList(int x)
 {
     if (!head)
     {
@@ -89,15 +89,9 @@ void displayList()
 
 int main()
 {
-    appendNode(1);
-    appendNode(1);
-    appendNode(1);
-    appendNode(1);
-    appendNode(1);
-    displayList();
-    appendNode(5);
-    appendLastToFirst();
-    displayList();
-    sortList();
-    displayList();
+    // makeList(8) -> adds 8 to the end of the list ... used for making the list
+    // appendToLast() -> remove the last node and adds it to the front of the linked list
+    // displayList() -> used to display the contents of the list
+    // sortList() ->used to sort the list
+    return 0;
 }

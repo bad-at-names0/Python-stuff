@@ -52,7 +52,7 @@ public:
 
     int peek()
     {
-        if (!start)
+        if (start == NULL)
         {
             return -1;
         }
