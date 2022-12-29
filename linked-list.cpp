@@ -1,149 +1,47 @@
 #include <bits/stdc++.h>
+#define int long long int
+#define fastio                        \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);
+#define pb push_back
+#define mod 1000000007
 using namespace std;
 
-class Node
+void findlcs(string s, string p, int n, vector<vector<int>> &dp)
 {
-public:
-    int val;
-    Node *next;
-    Node(int x)
+    for (int i = 1; i <= n; i++)
     {
-        this->val = x;
-        this->next = NULL;
+        for (int j = 1; j <= n; j++)
+        {
+            if (s[i - 1] == p[j - 1])
+            {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            }
+            else
+            {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
     }
-};
+}
 
-class LinkedList
+int32_t main()
 {
-private:
-    Node *head = NULL;
-
-public:
-    LinkedList(vector<int> v)
+    fastio int t;
+    cin >> t;
+    while (t--)
     {
-        Node *temp = new Node(v[0]);
-        head = temp;
-        Node *cur = head;
-        for (int i = 1; i < v.size(); i++)
-        {
-            temp = new Node(v[i]);
-            cur->next = temp;
-            cur = temp;
-        }
-    }
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        string copys = s;
+        reverse(s.begin(), s.end());
+        vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
 
-    int countNodes()
-    {
-        Node *temp = head;
-        int count = 0;
-        while (temp)
-        {
-            count++;
-            temp = temp->next;
-        }
-        return count;
-    }
+        findlcs(s, copys, n, dp);
 
-    void InsertAtBegin(int x)
-    {
-        Node *temp = new Node(x);
-        if (head)
-        {
-            temp->next = head;
-            head = temp;
-        }
-        else
-        {
-            head = temp;
-        }
+        cout << dp[n][n] / 2 << endl;
     }
-
-    void InsertAtPos(int x, int pos)
-    {
-        if (pos < 0 || pos > countNodes())
-        {
-            cout << "Invalid position";
-            return;
-        }
-        if (x == 0)
-        {
-            InsertAtBegin(x);
-            return;
-        }
-        Node *cur = head;
-        Node *temp = new Node(x);
-        for (int i = 1; i < pos; i++)
-        {
-            cur = cur->next;
-        }
-        temp->next = cur->next;
-        cur->next = temp;
-    }
-
-    int DeleteBegin()
-    {
-        if (!head)
-        {
-            return -1;
-        }
-        Node *temp = head;
-        head = head->next;
-        int deletedVal = temp->val;
-        delete temp;
-        return deletedVal;
-    }
-
-    int DeleteVal(int x)
-    {
-        if (!head)
-        {
-            return -1;
-        }
-        Node *temp = head;
-        Node *trail = NULL;
-        while (temp && temp->val != x)
-        {
-            trail = temp;
-            temp = temp->next;
-        }
-        if (!temp)
-        {
-            return -1;
-        }
-        trail->next = temp->next;
-        int deletedVal = temp->val;
-        delete temp;
-        return deletedVal;
-    }
-
-    void DisplayList()
-    {
-        Node *temp = head;
-        while (temp)
-        {
-            cout << temp->val << " ";
-            temp = temp->next;
-        }
-        cout << endl;
-    }
-};
-
-int main()
-{
-    vector<int> v(5);
-    for (int i = 0; i < 5; i++)
-    {
-        v[i] = i + 3;
-    }
-    LinkedList L(v);
-    L.DisplayList();
-    L.InsertAtBegin(99);
-    L.DisplayList();
-    L.DeleteBegin();
-    L.DisplayList();
-    L.DeleteVal(7);
-    L.DisplayList();
-    L.InsertAtPos(43, 3);
-    L.DisplayList();
     return 0;
 }
