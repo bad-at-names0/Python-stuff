@@ -1,77 +1,51 @@
 #include <bits/stdc++.h>
-#define int long long int
-#define fastio                        \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);
-#define pb push_back
-#define mod 1000000007
 using namespace std;
 
-bool checkPrime(int n)
+class Solution
 {
-    if (n <= 1)
-        return false;
-
-    for (int i = 2; i < n; i++)
+public:
+    // Function to return the sorted array.
+    vector<int> nearlySorted(int arr[], int num, int K)
     {
-        if (n % i == 0)
+        // Your code here
+        priority_queue<int, vector<int>, greater<int>> q; // This is now a min heap
+
+        for (int i = 0; i <= K; i++)
         {
-            return false;
+            q.push(arr[i]);
         }
+
+        int index = 0;
+
+        for (int i = K + 1; i < num; i++)
+        {
+            arr[index++] = q.top();
+            q.pop();
+            q.push(arr[i]);
+        }
+
+        while (!q.empty())
+        {
+            arr[index++] = q.top();
+            q.pop();
+        }
+
+        return vector<int>(arr, arr + num);
+    }
+};
+
+int main()
+{
+    Solution S;
+    int num = 7;
+    int k = 3;
+    int arr[7] = {6, 5, 3, 2, 8, 10, 9};
+    vector<int> temp = S.nearlySorted(arr, num, k);
+    for (auto &it : temp)
+    {
+        cout << it << " ";
     }
 
-    return true;
-}
-
-int32_t main()
-{
-    fastio int t;
-    cin >> t;
-    while (t--)
-    {
-        int n;
-        cin >> n;
-        map<int, int> mp;
-        vector<int> v(n);
-        for (int i = 0; i < n; i++)
-        {
-            cin >> v[i];
-            mp[v[i]]++;
-        }
-        bool flag = false;
-        int cnt = 0;
-
-        for (auto &it : mp)
-        {
-            if (it.second > 1)
-            {
-                flag = true;
-                break;
-            }
-        }
-
-        if (flag)
-        {
-            cout << "NO\n";
-            continue;
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            if (checkPrime(v[i]) == 1)
-            {
-                cnt++;
-            }
-        }
-
-        if (cnt % 2 == 0)
-        {
-            cout << "YES\n";
-        }
-        else
-        {
-            cout << "NO\n";
-        }
-    }
+    cout << endl;
     return 0;
 }
