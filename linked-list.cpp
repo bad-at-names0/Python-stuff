@@ -1,51 +1,27 @@
 #include <bits/stdc++.h>
+#define int long long int
+#define fastio                        \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);
+#define pb push_back
+#define mod 1000000007
 using namespace std;
 
-class Solution
+int32_t main()
 {
-public:
-    // Function to return the sorted array.
-    vector<int> nearlySorted(int arr[], int num, int K)
+    fastio int n;
+    cin >> n;
+    vector<vector<int>> v(0, vector<int>(2));
+    for (int i = 0; i < n; i++)
     {
-        // Your code here
-        priority_queue<int, vector<int>, greater<int>> q; // This is now a min heap
-
-        for (int i = 0; i <= K; i++)
-        {
-            q.push(arr[i]);
-        }
-
-        int index = 0;
-
-        for (int i = K + 1; i < num; i++)
-        {
-            arr[index++] = q.top();
-            q.pop();
-            q.push(arr[i]);
-        }
-
-        while (!q.empty())
-        {
-            arr[index++] = q.top();
-            q.pop();
-        }
-
-        return vector<int>(arr, arr + num);
+        int x, y;
+        cin >> x >> y;
+        v.pb({x, y});
     }
-};
-
-int main()
-{
-    Solution S;
-    int num = 7;
-    int k = 3;
-    int arr[7] = {6, 5, 3, 2, 8, 10, 9};
-    vector<int> temp = S.nearlySorted(arr, num, k);
-    for (auto &it : temp)
+    sort(v.begin(), v.end());
+    for (auto &it : v)
     {
-        cout << it << " ";
+        cout << it[0] << " " << it[1] << endl;
     }
-
-    cout << endl;
     return 0;
 }
