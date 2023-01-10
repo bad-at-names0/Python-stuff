@@ -13,66 +13,59 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n;
-        cin >> n;
-        vector<int> v(n);
-        unordered_map<int, int> mp;
+        int n, m;
+        cin >> n >> m;
+        vector<int> preptimes(n);
         for (int i = 0; i < n; i++)
         {
-            cin >> v[i];
-            mp[v[i]] = i;
+            cin >> preptimes[i];
         }
 
-        int cnt = 0;
-        if (mp[1] != 1)
-        {
-            int posT = mp[1];
-            swap(v[1], v[mp[1]]);
-            mp[v[mp[1]]] = mp[1];
-            mp[1] = 1;
-            cnt++;
-        }
-        if (mp[2] != 0)
-        {
-            int posT = mp[2];
-            swap(v[0], v[mp[2]]);
-            mp[v[mp[2]]] = mp[2];
-            mp[2] = 0;
-            cnt++;
-        }
+        sort(preptimes.rbegin(), preptimes.rend());
 
-        mp.clear();
-        for (int i = 2; i < n; i++)
+        vector<int> matchWon(n);
+        int myWon = 0;
+        bool flag = true;
+
+        for (int i = n - 1; i >= 0; i--)
         {
-            mp[v[i]] = i;
-        }
-
-        // for (auto &it : mp)
-        // {
-        //     cout << it.first << " " << it.second << endl;
-        // }
-
-        // cout << endl;
-
-        for (int i = 2; i < n; i++)
-        {
-            if (v[i] != i + 1)
+            if (m >= preptimes[i])
             {
-                int whereIsVigoing = mp[i + 1];
-                swap(v[i], v[mp[i + 1]]);
-
-                mp[v[mp[i + 1]]] = mp[i + 1];
-                mp[i + 1] = i;
-
-                //     swap(v[0], v[mp[2]]);
-                // mp[v[mp[2]]] = mp[2];
-                // mp[2] = 0;
-                // // update mp of v[i] and i+1
-                cnt++;
+                m -= preptimes[i];
+                matchWon[i] = i;
+                myWon++;
+            }
+            else
+            {
+                matchWon[i] = i + 1;
             }
         }
 
-        cout << cnt << endl;
+        int rank = 1;
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (matchWon[i] > myWon)
+            {
+                int start = matchWon[i];
+                while (i > 0 and matchWon[i] == matchWon[i - 1])
+                {
+                    i--;
+                }
+                // if( i == 0 ) {
+                //     if(matchWon[0] == start) {
+
+                //     }
+                // }
+                rank++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        cout << rank << endl;
     }
     return 0;
 }
