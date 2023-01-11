@@ -9,11 +9,6 @@ using namespace std;
 
 int32_t main()
 {
-    fastio int t;
-    cin >> t;
-    while (t--)
-    {
-        
-    }
+    
     return 0;
 }

@@ -13,59 +13,61 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n, m;
-        cin >> n >> m;
-        vector<int> preptimes(n);
+        int n;
+        cin >> n;
+        vector<string> v;
+        string ans = "";
+
+        string x;
+        unordered_map<string, int> mp;
         for (int i = 0; i < n; i++)
         {
-            cin >> preptimes[i];
+            cin >> x;
+            v.pb(x);
+            mp[x]++;
         }
 
-        sort(preptimes.rbegin(), preptimes.rend());
-
-        vector<int> matchWon(n);
-        int myWon = 0;
-        bool flag = true;
-
-        for (int i = n - 1; i >= 0; i--)
+        for (int i = 0; i < n; i++)
         {
-            if (m >= preptimes[i])
+            string temp = v[i];
+            if (temp.length() == 1)
             {
-                m -= preptimes[i];
-                matchWon[i] = i;
-                myWon++;
+                ans += '0';
+                continue;
             }
-            else
-            {
-                matchWon[i] = i + 1;
-            }
-        }
 
-        int rank = 1;
-
-        for (int i = n - 1; i >= 0; i--)
-        {
-            if (matchWon[i] > myWon)
+            string a, b;
+            bool found = false;
+            for (int i = 1; i < temp.length(); i++)
             {
-                int start = matchWon[i];
-                while (i > 0 and matchWon[i] == matchWon[i - 1])
+                a = temp.substr(0, i);
+                b = temp.substr(i, temp.length() - a.length());
+                // cout << a << " " << b << endl;
+                if (mp[a] and mp[b])
                 {
-                    i--;
+                    // cout << a << " " << b << " " << v[i].second << " " << i << endl;
+                    ans += '1';
+                    found = true;
+                    break;
                 }
-                // if( i == 0 ) {
-                //     if(matchWon[0] == start) {
-
-                //     }
-                // }
-                rank++;
             }
-            else
+            if (!found)
             {
-                break;
+                ans += '0';
             }
+
+            // for (auto &it : ans)
+            // {
+            //     cout << it;
+            // }
+            // cout << endl;
         }
 
-        cout << rank << endl;
+        for (auto &it : ans)
+        {
+            cout << it;
+        }
+        cout << endl;
     }
     return 0;
 }
